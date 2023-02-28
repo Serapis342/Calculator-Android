@@ -1,13 +1,11 @@
-package com.example.calculator;
+package com.serapis.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -17,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public double number1;
     public double number2;
     public short handler = 0;
-    public String stringResult = new String();
+    public String stringResult = "";
     public boolean ce = false;
     public ArrayList term = new ArrayList();
     public boolean buttonDisable = false;
@@ -46,12 +45,9 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         decorView = getWindow().getDecorView();
-        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener(){
-            @Override
-            public void onSystemUiVisibilityChange(int visibility){
-                if (visibility == 0){
-                    decorView.setSystemUiVisibility(hideSystemBars());
-                }
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if (visibility == 0){
+                decorView.setSystemUiVisibility(hideSystemBars());
             }
         });
         setContentView(R.layout.activity_main);
@@ -79,171 +75,117 @@ public class MainActivity extends AppCompatActivity {
         TextView Output = (TextView) findViewById(R.id.Output);
         Output.setMovementMethod(new ScrollingMovementMethod());
 
-        Null.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("0");
-                vibrate();
-            }
+        Null.setOnClickListener(view -> {
+            changeTerm("0");
+            vibrate();
         });
 
-        One.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("1");
-                vibrate();
-            }
+        One.setOnClickListener(view -> {
+            changeTerm("1");
+            vibrate();
         });
 
-        Two.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("2");
-                vibrate();
-            }
+        Two.setOnClickListener(view -> {
+            changeTerm("2");
+            vibrate();
         });
 
-        Three.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("3");
-                vibrate();
-            }
+        Three.setOnClickListener(view -> {
+            changeTerm("3");
+            vibrate();
         });
 
-        Four.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("4");
-                vibrate();
-            }
+        Four.setOnClickListener(view -> {
+            changeTerm("4");
+            vibrate();
         });
 
-        Five.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("5");
-                vibrate();
-            }
+        Five.setOnClickListener(view -> {
+            changeTerm("5");
+            vibrate();
         });
 
-        Six.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("6");
-                vibrate();
-            }
+        Six.setOnClickListener(view -> {
+            changeTerm("6");
+            vibrate();
         });
 
-        Seven.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("7");
-                vibrate();
-            }
+        Seven.setOnClickListener(view -> {
+            changeTerm("7");
+            vibrate();
         });
 
-        Eight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("8");
-                vibrate();
-            }
+        Eight.setOnClickListener(view -> {
+            changeTerm("8");
+            vibrate();
         });
 
-        Nine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("9");
-                vibrate();
-            }
+        Nine.setOnClickListener(view -> {
+            changeTerm("9");
+            vibrate();
         });
 
-        Plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("+");
-                vibrate();
-            }
+        Plus.setOnClickListener(view -> {
+            changeTerm("+");
+            vibrate();
         });
 
-        Minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("-");
-                vibrate();
-            }
+        Minus.setOnClickListener(view -> {
+            changeTerm("-");
+            vibrate();
         });
 
-        Mal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("×");
-                vibrate();
-            }
+        Mal.setOnClickListener(view -> {
+            changeTerm("×");
+            vibrate();
         });
 
-        Geteilt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTerm("/");
-                vibrate();
-            }
+        Geteilt.setOnClickListener(view -> {
+            changeTerm("/");
+            vibrate();
         });
 
-        plusMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                plusMinus();
-                vibrate();
-            }
+        plusMinus.setOnClickListener(view -> {
+            plusMinus();
+            vibrate();
         });
 
-        dot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dot();
-                vibrate();
-            }
+        dot.setOnClickListener(view -> {
+            dot();
+            vibrate();
         });
 
-        CE.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                vibrate();
-                Output.scrollTo(0, 0);
-                if(easteregg == false){
-                    CE();
-                }else{
-                    TextView Output = (TextView) findViewById(R.id.Output);
-                    Output.setText(stringResult);
-                    easteregg = false;
-                }
+        CE.setOnClickListener(view -> {
+            vibrate();
+            Output.scrollTo(0, 0);
+            if(!easteregg){
+                CE();
+            }else{
+                TextView Output1 = (TextView) findViewById(R.id.Output);
+                Output1.setText(stringResult);
+                easteregg = false;
             }
         });
 
 
 
-        Equals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                vibrate();
-                Output.scrollTo(0, 0);
-                if(term.size() != 0){
-                    ImproveTerm();
-                }
+        Equals.setOnClickListener(view -> {
+            vibrate();
+            Output.scrollTo(0, 0);
+            if(term.size() != 0){
+                ImproveTerm();
             }
         });
     }
 
-    private final void ImproveTerm(){
+    private void ImproveTerm(){
 
         if(term.get(term.size()-1) == "+" || term.get(term.size()-1) == "-" || term.get(term.size()-1) == "×" || term.get(term.size()-1) == "/" || term.get(term.size()-1) == "."){
             term.remove(term.size()-1);
         }
 
         for (int i = 0; i < term.size(); i++) {
-            if (term.get(i).toString() == "/" || term.get(i).toString() == "×") {
+            if (term.get(i).toString().equals("/") || term.get(i).toString().equals("×")) {
                 dotBeforeDash.add(i);
             }
         }
@@ -251,14 +193,14 @@ public class MainActivity extends AppCompatActivity {
         Calculate();
     }
 
-    private final void Output(){
+    private void Output(){
         TextView Output = (TextView) findViewById(R.id.Output);
         i++;
         Output.append(term.get(i).toString());
     }
 
-    private final void CE(){
-        if(ce == true){
+    private void CE(){
+        if(ce){
             ce = false;
             minusHandler = false;
             plusMinusHandler = 0;
@@ -280,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private final void showResult(){
+    private void showResult(){
         TextView Output = (TextView) findViewById(R.id.Output);
 
         Output.setText(stringResult);
@@ -289,20 +231,20 @@ public class MainActivity extends AppCompatActivity {
         disEnableButtons();
     }
 
-    private final void changeTerm(String termChar){
+    private void changeTerm(String termChar){
         TextView Output = (TextView) findViewById(R.id.Output);
         String cache;
 
-        if(termChar == "+" || termChar == "-" || termChar == "×" || termChar == "/"){
+        if(Objects.equals(termChar, "+") || Objects.equals(termChar, "-") || Objects.equals(termChar, "×") || Objects.equals(termChar, "/")){
             minusHandler = false;
             plusMinusHandler = 0;
         }
 
-        if(termChar == "."){
+        if(Objects.equals(termChar, ".")){
             plusMinusHandler ++;
         }
 
-        if(termChar == "+" || termChar == "-" || termChar == "×" || termChar == "/" || termChar == "."){
+        if(Objects.equals(termChar, "+") || Objects.equals(termChar, "-") || Objects.equals(termChar, "×") || Objects.equals(termChar, "/") || Objects.equals(termChar, ".")){
             counter = 0;
             if(term.size() != 0) {
                 troll = false;
@@ -328,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void Calculate() {
         TextView Output = (TextView) findViewById(R.id.Output);
-        if (troll == true) {
+        if (troll) {
             result = Double.parseDouble(Output.getText().toString());
             checkForDotNull();
         }else{
@@ -434,17 +376,17 @@ public class MainActivity extends AppCompatActivity {
                                     numberHandler = "";
                                     break;
                             }
-                        } catch (Exception exception) {
+                        } catch (Exception ignored) {
                         }
                     }
 
                     try {
-                        if (term.get(x).toString() != "MINUS") {
+                        if (!term.get(x).toString().equals("MINUS")) {
                             numberHandler += term.get(x).toString();
                         } else {
                             numberHandler += "-";
                         }
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
                     x += 1;
                 }
@@ -481,8 +423,8 @@ public class MainActivity extends AppCompatActivity {
         Button dot = (Button) findViewById(R.id.buttonComma);
         Button plusMinus = (Button) findViewById(R.id.buttonPlusMinus);
         Button Equals = (Button) findViewById(R.id.buttonEquals);
-        if(buttonDisable == true){
-            if (One.isEnabled() == true) {
+        if(buttonDisable){
+            if (One.isEnabled()) {
                 Null.setEnabled(false);
                 One.setEnabled(false);
                 Two.setEnabled(false);
@@ -522,7 +464,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private final void checkForEastereggs(){
+    @SuppressLint("SetTextI18n")
+    private void checkForEastereggs(){
         TextView Output = (TextView) findViewById(R.id.Output);
         ImageView fbi = (ImageView) findViewById(R.id.fbi);
 
@@ -556,14 +499,14 @@ public class MainActivity extends AppCompatActivity {
         String cache = Output.getText().toString();
 
         if(term.size() != 0) {
-            if (term.get(term.size()-1).toString() == "+" || term.get(term.size()-1).toString() == "-" || term.get(term.size()-1).toString() == "×" || term.get(term.size()-1).toString() == "/") {
+            if (term.get(term.size() - 1).toString().equals("+") || term.get(term.size() - 1).toString().equals("-") || term.get(term.size() - 1).toString().equals("×") || term.get(term.size() - 1).toString().equals("/")) {
                 term.add("MINUS");
                 minusHandler = true;
                 cache += "(-)";
                 i++;
                 Output.setText(cache);
             }else{
-                if (minusHandler == false) {
+                if (!minusHandler) {
                     minusHandler = true;
                     term.add(term.size() - plusMinusHandler, "MINUS");
                     String newOutput = new StringBuilder(cache).insert(term.size() - plusMinusHandler - 1, "-").toString();
@@ -596,8 +539,6 @@ public class MainActivity extends AppCompatActivity {
 
         switch( audio.getRingerMode() ){
             case AudioManager.RINGER_MODE_NORMAL:
-                vibrator.vibrate(70);
-                break;
             case AudioManager.RINGER_MODE_VIBRATE:
                 vibrator.vibrate(70);
                 break;
